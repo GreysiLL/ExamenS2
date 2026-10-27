@@ -70,3 +70,7 @@ Aplicación: https://github.com/GreysiLL/exa-agrocampo
 ## Trazabilidad
 
 Se usan main, develop, ramas feature, fix y sc-b-duran/sc-c-duran. Los commits tienen las fechas reales de esta jornada. Este proyecto se inició desde cero el día del examen: no acredita un historial distribuido a lo largo de la unidad y no se presenta como si lo tuviera. Las fusiones locales no equivalen a solicitudes de incorporación remotas; comprobar estas últimas en GitHub.
+
+## Informe de evidencias
+
+[Informe del examen con capturas](evidencias/Examen_Parcial_II_AgroSierra_DuranCastro.pdf). Verificación final: backend 9 pruebas; Android 13 pruebas; Postman/Newman 27 solicitudes y 30 comprobaciones aprobadas.
