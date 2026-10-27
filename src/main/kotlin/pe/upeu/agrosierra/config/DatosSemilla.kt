@@ -1,11 +1,13 @@
 package pe.upeu.agrosierra.config
 import org.springframework.boot.CommandLineRunner
+import org.springframework.core.annotation.Order
 import org.springframework.stereotype.Component
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.transaction.support.TransactionTemplate
 import java.time.*
 @Component
+@Order(0)
 class DatosSemilla(private val db: JdbcTemplate,private val encoder: PasswordEncoder,private val tx: TransactionTemplate): CommandLineRunner {
  override fun run(vararg args: String) { tx.executeWithoutResult {
   if(db.queryForObject("SELECT COUNT(*) FROM usuario",Long::class.java)!!>0)return@executeWithoutResult

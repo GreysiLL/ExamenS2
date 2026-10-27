@@ -63,4 +63,13 @@ class ContratoTest {
   val exceso=pedir("POST","labores",labor(cantidad=10000.0,tipo="FUMIGACION"),t);assertEquals(400,exceso.statusCode());assertTrue(json.readTree(exceso.body())["validationErrors"].has("cantidad"))
   val invalida=pedir("POST","labores",labor(cantidad=-1.0),t);assertEquals(400,invalida.statusCode());assertTrue(json.readTree(invalida.body()).has("path"))
  }
+ @Test fun supervisorCorrigeTodasSinCerrarNiCrear() {
+  val t=login("calidad1")
+  val me=json.readTree(pedir("GET","usuarios/me",token=t).body())
+  assertTrue(me["edicionGlobal"].asBoolean())
+  val viejo=db.queryForObject("SELECT id FROM labor WHERE responsable_id=1 AND creado_en < DATEADD('HOUR',-24,CURRENT_TIMESTAMP) AND lote_id=1 FETCH FIRST 1 ROW ONLY",Long::class.java)!!
+  assertEquals(200,pedir("PUT","labores/$viejo",labor(lote=1),t).statusCode())
+  assertEquals(403,pedir("POST","lotes/1/cerrar-campania",token=t).statusCode())
+  assertEquals(403,pedir("POST","labores",labor(),t).statusCode())
+ }
 }
