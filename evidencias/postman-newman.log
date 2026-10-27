@@ -1,0 +1,138 @@
+(node:7000) [DEP0176] DeprecationWarning: fs.F_OK is deprecated, use fs.constants.F_OK instead
+(Use `node --trace-deprecation ...` to show where the warning was created)
+newman
+
+AgroSierra - Contrato del examen U2
+
+→ Login tecnico1
+  POST http://localhost:8081/api/v1/auth/login [200 OK, 810B, 741ms]
+  √  HTTP 200
+
+→ Login jefe1
+  POST http://localhost:8081/api/v1/auth/login [200 OK, 882B, 307ms]
+  √  HTTP 200
+
+→ Login admin
+  POST http://localhost:8081/api/v1/auth/login [200 OK, 784B, 362ms]
+  √  HTTP 200
+
+→ Login calidad1
+  POST http://localhost:8081/api/v1/auth/login [200 OK, 791B, 323ms]
+  √  HTTP 200
+
+→ 401 sin token
+  GET http://localhost:8081/api/v1/lotes [401 Unauthorized, 519B, 11ms]
+  √  HTTP 401
+
+→ 401 token alterado
+  GET http://localhost:8081/api/v1/lotes [401 Unauthorized, 523B, 7ms]
+  √  HTTP 401
+
+→ 401 credenciales incorrectas
+  POST http://localhost:8081/api/v1/auth/login [401 Unauthorized, 521B, 153ms]
+  √  HTTP 401
+
+→ Usuario actual y privilegios
+  GET http://localhost:8081/api/v1/usuarios/me [200 OK, 493B, 24ms]
+  √  HTTP 200
+
+→ Padrón paginado
+  GET http://localhost:8081/api/v1/lotes?pagina=0&tamanio=3 [200 OK, 878B, 34ms]
+  √  HTTP 200
+  √  Envoltorio
+
+→ Filtro valle y estado
+  GET http://localhost:8081/api/v1/lotes?valle=Mantaro&campaniaCerrada=false [200 OK, 725B, 18ms]
+  √  HTTP 200
+
+→ Detalle lote
+  GET http://localhost:8081/api/v1/lotes/1 [200 OK, 481B, 12ms]
+  √  HTTP 200
+
+→ Labores paginadas
+  GET http://localhost:8081/api/v1/lotes/1/labores?pagina=0&tamanio=2 [200 OK, 880B, 14ms]
+  √  HTTP 200
+
+→ 403 admin no registra
+  POST http://localhost:8081/api/v1/labores [403 Forbidden, 540B, 14ms]
+  √  HTTP 403
+
+→ 403 conserva sesión
+  GET http://localhost:8081/api/v1/usuarios/me [200 OK, 483B, 9ms]
+  √  HTTP 200
+
+→ 403 técnico no elimina
+  DELETE http://localhost:8081/api/v1/labores/1 [403 Forbidden, 542B, 8ms]
+  √  HTTP 403
+
+→ 403 técnico no cierra
+  POST http://localhost:8081/api/v1/lotes/2/cerrar-campania [403 Forbidden, 556B, 7ms]
+  √  HTTP 403
+
+→ 400 validación cantidad
+  POST http://localhost:8081/api/v1/labores [400 Bad Request, 518B, 19ms]
+  √  HTTP 400
+  √  Campo cantidad
+
+→ 400 RN04 exceso dosis
+  POST http://localhost:8081/api/v1/labores [400 Bad Request, 524B, 22ms]
+  √  HTTP 400
+
+→ 409 RN01 lote cerrado
+  POST http://localhost:8081/api/v1/labores [409 Conflict, 515B, 18ms]
+  √  HTTP 409
+
+→ 409 RN03 falta cosecha
+  POST http://localhost:8081/api/v1/lotes/2/cerrar-campania [409 Conflict, 550B, 12ms]
+  √  HTTP 409
+
+→ SC-B supervisor no cierra
+  POST http://localhost:8081/api/v1/lotes/1/cerrar-campania [403 Forbidden, 556B, 9ms]
+  √  HTTP 403
+
+→ SC-C jornales inválidos
+  POST http://localhost:8081/api/v1/labores [400 Bad Request, 540B, 15ms]
+  √  HTTP 400
+
+→ 404 recurso inexistente
+  GET http://localhost:8081/api/v1/lotes/999999 [404 Not Found, 501B, 15ms]
+  √  HTTP 404
+
+→ 201 Crear labor de prueba
+  POST http://localhost:8081/api/v1/labores [201 Created, 578B, 14ms]
+  √  HTTP 201
+
+→ 200 Corregir labor creada
+  PUT http://localhost:8081/api/v1/labores/22 [200 OK, 566B, 25ms]
+  √  HTTP 200
+
+→ 204 Eliminar labor de prueba
+  DELETE http://localhost:8081/api/v1/labores/22 [204 No Content, 282B, 32ms]
+  √  HTTP 204
+  √  Sin cuerpo
+
+→ 404 después de eliminar
+  PUT http://localhost:8081/api/v1/labores/22 [404 Not Found, 500B, 21ms]
+  √  HTTP 404
+
+→ Cierre correcto: habilitar conscientemente
+
+┌─────────────────────────┬───────────────────┬───────────────────┐
+│                         │          executed │            failed │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│              iterations │                 1 │                 0 │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│                requests │                27 │                 0 │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│            test-scripts │                27 │                 0 │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│      prerequest-scripts │                 2 │                 0 │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│              assertions │                30 │                 0 │
+├─────────────────────────┴───────────────────┴───────────────────┤
+│ total run duration: 4.9s                                        │
+├─────────────────────────────────────────────────────────────────┤
+│ total data received: 7.08kB (approx)                            │
+├─────────────────────────────────────────────────────────────────┤
+│ average response time: 83ms [min: 7ms, max: 741ms, s.d.: 163ms] │
+└─────────────────────────────────────────────────────────────────┘

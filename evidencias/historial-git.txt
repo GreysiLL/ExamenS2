@@ -1,0 +1,30 @@
+* 934341c (HEAD -> feature/documentacion-y-evidencias) docs(api): explica contrato arquitectura roles y ejecución reproducible
+*   abd2880 (develop) fix: integra corrección de mensajes y arranque
+|\  
+| * b41a245 (fix/errores-y-textos) fix(api): conserva textos UTF-8 y permite regenerar archivos de compilación
+|/  
+*   22dcf06 fix: integra arranque reproducible del backend
+|\  
+| * 3af68ec (fix/ejecucion-portable) fix(inicio): arranca artefacto vigente y recompila cuando cambia el código
+|/  
+*   2aba2ee feat: integra cantidad de jornales de extremo servidor
+|\  
+| * d8c88e4 (sc-c-duran) test(sc-c): verifica jornales y cierre de campaña en nueve pruebas
+| * df1545e feat(sc-c): valida y conserva jornales al registrar y corregir labores
+| * 4c308ec feat(sc-c): amplía contrato y persistencia con cantidad de jornales
+|/  
+*   7c0733b feat: integra supervisor de calidad verificado
+|\  
+| * 91ee7fd (sc-b-duran) docs(sc-b): documenta cuenta permisos y siete pruebas aprobadas
+| * 004aa40 test(sc-b): exige edición global y rechaza crear o cerrar al supervisor
+| * 42db7da feat(sc-b): incorpora supervisor de calidad con privilegios en base de datos
+|/  
+*   f9bab61 test: integra pruebas de contrato y colección Postman
+|\  
+| * cb932ab (feature/pruebas-del-contrato) test(api): verifica CRUD permisos tokens y reglas con base relacional
+|/  
+*   afed544 feat: integra seguridad y contrato del servicio verificado
+|\  
+| * e4c474b (feature/seguridad-y-contrato) feat(api): protege JWT y aplica contrato AgroSierra con reglas de negocio
+|/  
+* dde7451 (main) docs: registra alcance y tareas del examen AgroSierra
