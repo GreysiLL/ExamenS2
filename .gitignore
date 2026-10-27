@@ -1,0 +1,11 @@
+target/
+build/
+.gradle/
+.kotlin/
+.idea/
+local.properties
+**/build/
+data/
+*.log
+*.jks
+*.keystore
