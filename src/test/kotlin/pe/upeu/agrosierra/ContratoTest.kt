@@ -25,7 +25,7 @@ class ContratoTest {
   return http.send(b.build(),HttpResponse.BodyHandlers.ofString())
  }
  private fun login(usuario: String="tecnico1"): String { val r=pedir("POST","auth/login","""{"usuario":"$usuario","contrasena":"Agro2026*"}""");assertEquals(200,r.statusCode(),r.body());return json.readTree(r.body())["token"].asText() }
- private fun labor(lote: Long=2,cantidad: Double=1.0,tipo: String="RIEGO")="""{"loteId":$lote,"tipo":"$tipo","fecha":"2026-10-27","cantidad":$cantidad,"observacion":"Prueba de contrato"}"""
+ private fun labor(lote: Long=2,cantidad: Double=1.0,tipo: String="RIEGO")="""{"loteId":$lote,"tipo":"$tipo","fecha":"2026-10-27","cantidad":$cantidad,"observacion":"Prueba de contrato","cantidadJornales":2.5}"""
  @Test fun loginCifradoYExpiracionDeUnaHora() {
   val t=login();val payload=json.readTree(String(Base64.getUrlDecoder().decode(t.split('.')[1])));assertEquals(3600,payload["exp"].asLong()-payload["iat"].asLong());assertTrue(payload["privilegios"].isArray)
   val hash=db.queryForObject("SELECT password_hash FROM usuario WHERE usuario='tecnico1'",String::class.java)!!;assertTrue(hash.startsWith("$2"));assertNotEquals("Agro2026*",hash)
@@ -47,7 +47,7 @@ class ContratoTest {
   assertEquals(404,pedir("GET","lotes/999999",token=token).statusCode());assertEquals(400,pedir("GET","lotes?tamanio=0",token=token).statusCode())
  }
  @Test fun crudRealIdempotenciaY204Vacio() {
-  val token=login();val clave=UUID.randomUUID().toString();val c=pedir("POST","labores",labor(),token,clave);assertEquals(201,c.statusCode(),c.body());val id=json.readTree(c.body())["id"].asLong();val repetida=pedir("POST","labores",labor(),token,clave);assertEquals(id,json.readTree(repetida.body())["id"].asLong())
+  val token=login();val clave=UUID.randomUUID().toString();val c=pedir("POST","labores",labor(),token,clave);assertEquals(201,c.statusCode(),c.body());assertEquals(2.5,json.readTree(c.body())["cantidadJornales"].asDouble());val id=json.readTree(c.body())["id"].asLong();val repetida=pedir("POST","labores",labor(),token,clave);assertEquals(id,json.readTree(repetida.body())["id"].asLong())
   val u=pedir("PUT","labores/$id",labor(cantidad=2.0),token);assertEquals(200,u.statusCode(),u.body());assertEquals(2.0,json.readTree(u.body())["cantidad"].asDouble())
   val d=pedir("DELETE","labores/$id",token=login("jefe1"));assertEquals(204,d.statusCode());assertEquals("",d.body());assertEquals(404,pedir("PUT","labores/$id",labor(),token).statusCode())
  }
@@ -71,5 +71,14 @@ class ContratoTest {
   assertEquals(200,pedir("PUT","labores/$viejo",labor(lote=1),t).statusCode())
   assertEquals(403,pedir("POST","lotes/1/cerrar-campania",token=t).statusCode())
   assertEquals(403,pedir("POST","labores",labor(),t).statusCode())
+ }
+ @Test fun jornalesInvalidosDevuelvenDetalleDeCampo() {
+  val r=pedir("POST","labores",labor().replace("2.5","-1.0"),login())
+  assertEquals(400,r.statusCode());assertTrue(json.readTree(r.body())["validationErrors"].has("cantidadJornales"))
+ }
+ @Test fun cierreConCosechaSeConfirmaEnBaseRelacional() {
+  db.update("INSERT INTO lote(codigo,nombre,hectareas,cultivo,valle,campania_cerrada,dosis_maxima) VALUES('PRUEBA-CIERRE','Lote temporal',1,'Papa','Mantaro',FALSE,1)")
+  val id=db.queryForObject("SELECT id FROM lote WHERE codigo='PRUEBA-CIERRE'",Long::class.java)!!
+  try {assertEquals(201,pedir("POST","labores",labor(lote=id,tipo="COSECHA"),login()).statusCode());val r=pedir("POST","lotes/$id/cerrar-campania",token=login("jefe1"));assertEquals(200,r.statusCode(),r.body());assertTrue(json.readTree(r.body())["campaniaCerrada"].asBoolean())}finally{db.update("DELETE FROM labor WHERE lote_id=?",id);db.update("DELETE FROM lote WHERE id=?",id)}
  }
 }

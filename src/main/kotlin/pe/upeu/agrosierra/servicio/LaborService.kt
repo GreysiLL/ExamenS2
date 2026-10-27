@@ -14,6 +14,7 @@ class LaborService(private val repo: AgroRepository,private val tx: TransactionT
   val tipo=TipoLabor.entries.find { it.name==p.tipo };if(tipo==null)e["tipo"]="Selecciona RIEGO, FUMIGACION o COSECHA"
   val fecha=runCatching { LocalDate.parse(p.fecha) }.getOrNull();if(fecha==null)e["fecha"]="Usa una fecha válida AAAA-MM-DD"
   if(!p.cantidad.isFinite() || p.cantidad<=0)e["cantidad"]="La cantidad debe ser mayor que cero"
+  if(!p.cantidadJornales.isFinite() || p.cantidadJornales<0)e["cantidadJornales"]="Los jornales deben ser cero o un n�mero positivo"
   if(p.observacion.length>500)e["observacion"]="Máximo 500 caracteres"
   if(p.loteId<=0)e["loteId"]="Selecciona un lote"
   if(e.isNotEmpty())throw Fallo(400,"Datos inválidos",e)
@@ -34,7 +35,7 @@ class LaborService(private val repo: AgroRepository,private val tx: TransactionT
   repo.db.queryForObject("SELECT id FROM lote WHERE id=? FOR UPDATE",Long::class.java,p.loteId)
   reglas(p,t)
   val key=org.springframework.jdbc.support.GeneratedKeyHolder()
-  repo.db.update({ c -> c.prepareStatement("INSERT INTO labor(lote_id,tipo,fecha,responsable_id,cantidad,observacion,creado_en,clave_cliente) VALUES(?,?,?,?,?,?,?,?)",arrayOf("id")).apply { setLong(1,p.loteId);setString(2,t.name);setObject(3,f);setLong(4,u.id);setDouble(5,p.cantidad);setString(6,p.observacion);setObject(7,LocalDateTime.now());setString(8,clave) } },key)
+  repo.db.update({ c -> c.prepareStatement("INSERT INTO labor(lote_id,tipo,fecha,responsable_id,cantidad,observacion,creado_en,clave_cliente,cantidad_jornales) VALUES(?,?,?,?,?,?,?,?,?)",arrayOf("id")).apply { setLong(1,p.loteId);setString(2,t.name);setObject(3,f);setLong(4,u.id);setDouble(5,p.cantidad);setString(6,p.observacion);setObject(7,LocalDateTime.now());setString(8,clave);setDouble(9,p.cantidadJornales) } },key)
   repo.labor(key.key!!.toLong())
  }!!
  fun editar(id: Long,p: LaborPeticion,u: Usuario): Labor = tx.execute {
@@ -43,7 +44,7 @@ class LaborService(private val repo: AgroRepository,private val tx: TransactionT
   val(t,f)=validar(p)
   if(p.loteId!=anterior.loteId)throw Fallo(400,"No puedes mover la labor a otro lote",mapOf("loteId" to "Conserva el lote original"))
   repo.db.queryForObject("SELECT id FROM lote WHERE id=? FOR UPDATE",Long::class.java,p.loteId);reglas(p,t)
-  repo.db.update("UPDATE labor SET tipo=?,fecha=?,cantidad=?,observacion=? WHERE id=?",t.name,f,p.cantidad,p.observacion,id);repo.labor(id)
+  repo.db.update("UPDATE labor SET tipo=?,fecha=?,cantidad=?,observacion=?,cantidad_jornales=? WHERE id=?",t.name,f,p.cantidad,p.observacion,p.cantidadJornales,id);repo.labor(id)
  }!!
  fun eliminar(id: Long,u: Usuario) { permiso(u,"LABOR_ELIMINAR");repo.labor(id);repo.db.update("DELETE FROM labor WHERE id=?",id) }
  fun cerrar(id: Long,u: Usuario): Lote = tx.execute {
