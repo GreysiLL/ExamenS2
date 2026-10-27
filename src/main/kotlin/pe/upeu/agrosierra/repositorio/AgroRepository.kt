@@ -7,7 +7,7 @@ import java.sql.ResultSet
 @Component
 class AgroRepository(val db: JdbcTemplate) {
  private fun lote(r: ResultSet) = Lote(r.getLong("id"),r.getString("codigo"),r.getString("nombre"),r.getDouble("hectareas"),r.getString("cultivo"),r.getString("valle"),r.getBoolean("campania_cerrada"),r.getDouble("dosis_maxima"))
- private fun labor(r: ResultSet) = Labor(r.getLong("id"),r.getLong("lote_id"),TipoLabor.valueOf(r.getString("tipo")),r.getDate("fecha").toLocalDate(),r.getString("responsable"),r.getDouble("cantidad"),r.getString("observacion"),r.getLong("responsable_id"),r.getTimestamp("creado_en").toLocalDateTime())
+ private fun labor(r: ResultSet) = Labor(r.getLong("id"),r.getLong("lote_id"),TipoLabor.valueOf(r.getString("tipo")),r.getDate("fecha").toLocalDate(),r.getString("responsable"),r.getDouble("cantidad"),r.getString("observacion"),r.getLong("responsable_id"),r.getTimestamp("creado_en").toLocalDateTime(),r.getDouble("cantidad_jornales"))
  fun lote(id: Long) = db.query("SELECT * FROM lote WHERE id=?",{r,_->lote(r)},id).firstOrNull() ?: throw Fallo(404,"El lote no existe")
  fun lotes(p: Int,t: Int,v: String?,e: Boolean?): Pagina<Lote> {
   val where=mutableListOf("1=1");val args=mutableListOf<Any>()
