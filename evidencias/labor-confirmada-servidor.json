@@ -1,0 +1,18 @@
+{
+  "fecha": "2026-10-27T15:26:52.191922-05:00",
+  "codigoHttp": 200,
+  "ruta": "/api/v1/lotes/1/labores",
+  "labor": {
+    "id": 23,
+    "loteId": 1,
+    "tipo": "RIEGO",
+    "fecha": "2026-10-27",
+    "responsable": "Técnico de campo",
+    "cantidad": 2.75,
+    "observacion": "ExamenOffline-151800",
+    "responsableId": 1,
+    "creadoEn": "2026-10-27T15:19:21.123369",
+    "cantidadJornales": 4.0
+  },
+  "coincidencias": 1
+}
