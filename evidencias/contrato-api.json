@@ -1,5 +1,5 @@
 {
-  "fecha": "2026-10-27T14:41:40.112626-05:00",
+  "fecha": "2026-10-27T15:08:40.520510-05:00",
   "resultados": [
     {
       "prueba": "Login tecnico1",
@@ -76,10 +76,10 @@
       "status": 401,
       "correcto": true,
       "respuesta": {
-        "timestamp": "2026-10-27T14:41:38.814339300",
+        "timestamp": "2026-10-27T15:08:38.986612300",
         "status": 401,
         "error": "Unauthorized",
-        "message": "Inicia sesiÃ³n para continuar",
+        "message": "Inicia sesión para continuar",
         "path": "/api/v1/lotes",
         "validationErrors": {}
       }
@@ -92,10 +92,10 @@
       "status": 401,
       "correcto": true,
       "respuesta": {
-        "timestamp": "2026-10-27T14:41:39.320399600",
+        "timestamp": "2026-10-27T15:08:39.639045",
         "status": 401,
         "error": "Unauthorized",
-        "message": "SesiÃ³n vencida o token invÃ¡lido",
+        "message": "Sesión vencida o token inválido",
         "path": "/api/v1/lotes",
         "validationErrors": {}
       }
@@ -108,10 +108,10 @@
       "status": 401,
       "correcto": true,
       "respuesta": {
-        "timestamp": "2026-10-27T14:41:39.454942400",
+        "timestamp": "2026-10-27T15:08:39.792881200",
         "status": 401,
         "error": "Unauthorized",
-        "message": "Usuario o contraseÃ±a incorrectos",
+        "message": "Usuario o contraseña incorrectos",
         "path": "/api/v1/auth/login",
         "validationErrors": {}
       }
@@ -236,7 +236,8 @@
             "cantidad": 1.0,
             "observacion": "Registro inicial de campaña",
             "responsableId": 1,
-            "creadoEn": "2026-10-27T13:39:13.533318"
+            "creadoEn": "2026-10-27T14:07:19.931995",
+            "cantidadJornales": 1.5
           },
           {
             "id": 9,
@@ -247,7 +248,8 @@
             "cantidad": 1.0,
             "observacion": "Registro inicial de campaña",
             "responsableId": 1,
-            "creadoEn": "2026-10-25T14:39:13.538938"
+            "creadoEn": "2026-10-25T15:07:19.937004",
+            "cantidadJornales": 1.5
           }
         ],
         "pagina": 0,
@@ -265,10 +267,10 @@
       "status": 403,
       "correcto": true,
       "respuesta": {
-        "timestamp": "2026-10-27T14:41:39.735937400",
+        "timestamp": "2026-10-27T15:08:40.181997600",
         "status": 403,
         "error": "Forbidden",
-        "message": "No tienes el privilegio necesario para esta operaciÃ³n",
+        "message": "No tienes el privilegio necesario para esta operación",
         "path": "/api/v1/labores",
         "validationErrors": {}
       }
@@ -301,10 +303,10 @@
       "status": 403,
       "correcto": true,
       "respuesta": {
-        "timestamp": "2026-10-27T14:41:39.776947100",
+        "timestamp": "2026-10-27T15:08:40.208613400",
         "status": 403,
         "error": "Forbidden",
-        "message": "No tienes el privilegio necesario para esta operaciÃ³n",
+        "message": "No tienes el privilegio necesario para esta operación",
         "path": "/api/v1/labores/1",
         "validationErrors": {}
       }
@@ -317,10 +319,10 @@
       "status": 403,
       "correcto": true,
       "respuesta": {
-        "timestamp": "2026-10-27T14:41:39.784935800",
+        "timestamp": "2026-10-27T15:08:40.216626",
         "status": 403,
         "error": "Forbidden",
-        "message": "No tienes el privilegio necesario para esta operaciÃ³n",
+        "message": "No tienes el privilegio necesario para esta operación",
         "path": "/api/v1/lotes/2/cerrar-campania",
         "validationErrors": {}
       }
@@ -333,7 +335,7 @@
       "status": 409,
       "correcto": true,
       "respuesta": {
-        "timestamp": "2026-10-27T14:41:39.848943900",
+        "timestamp": "2026-10-27T15:08:40.288809800",
         "status": 409,
         "error": "Conflict",
         "message": "La campaña de este lote está cerrada",
@@ -349,7 +351,7 @@
       "status": 409,
       "correcto": true,
       "respuesta": {
-        "timestamp": "2026-10-27T14:41:39.887942300",
+        "timestamp": "2026-10-27T15:08:40.309909700",
         "status": 409,
         "error": "Conflict",
         "message": "Registra al menos una cosecha antes de cerrar la campaña",
@@ -365,7 +367,7 @@
       "status": 400,
       "correcto": true,
       "respuesta": {
-        "timestamp": "2026-10-27T14:41:39.905943100",
+        "timestamp": "2026-10-27T15:08:40.327121100",
         "status": 400,
         "error": "Bad Request",
         "message": "La dosis supera el máximo del lote",
@@ -383,7 +385,7 @@
       "status": 400,
       "correcto": true,
       "respuesta": {
-        "timestamp": "2026-10-27T14:41:39.941938500",
+        "timestamp": "2026-10-27T15:08:40.341647800",
         "status": 400,
         "error": "Bad Request",
         "message": "Datos inválidos",
@@ -401,7 +403,7 @@
       "status": 404,
       "correcto": true,
       "respuesta": {
-        "timestamp": "2026-10-27T14:41:39.955939500",
+        "timestamp": "2026-10-27T15:08:40.354663800",
         "status": 404,
         "error": "Not Found",
         "message": "El lote no existe",
@@ -423,9 +425,10 @@
         "fecha": "2026-10-27",
         "responsable": "Técnico de campo",
         "cantidad": 1.0,
-        "observacion": "Prueba automatizada 1284548a",
+        "observacion": "Prueba automatizada 3e8dc5e9",
         "responsableId": 1,
-        "creadoEn": "2026-10-27T14:41:40.004058"
+        "creadoEn": "2026-10-27T15:08:40.395535",
+        "cantidadJornales": 0.0
       }
     },
     {
@@ -442,9 +445,10 @@
         "fecha": "2026-10-27",
         "responsable": "Técnico de campo",
         "cantidad": 1.0,
-        "observacion": "Prueba automatizada 1284548a",
+        "observacion": "Prueba automatizada 3e8dc5e9",
         "responsableId": 1,
-        "creadoEn": "2026-10-27T14:41:40.004058"
+        "creadoEn": "2026-10-27T15:08:40.395535",
+        "cantidadJornales": 0.0
       }
     },
     {
@@ -461,9 +465,10 @@
         "fecha": "2026-10-27",
         "responsable": "Técnico de campo",
         "cantidad": 2.0,
-        "observacion": "Prueba automatizada 1284548a",
+        "observacion": "Prueba automatizada 3e8dc5e9",
         "responsableId": 1,
-        "creadoEn": "2026-10-27T14:41:40.004058"
+        "creadoEn": "2026-10-27T15:08:40.395535",
+        "cantidadJornales": 0.0
       }
     },
     {
@@ -483,7 +488,7 @@
       "status": 404,
       "correcto": true,
       "respuesta": {
-        "timestamp": "2026-10-27T14:41:40.110624700",
+        "timestamp": "2026-10-27T15:08:40.518509800",
         "status": 404,
         "error": "Not Found",
         "message": "La labor no existe",
