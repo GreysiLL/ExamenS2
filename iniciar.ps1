@@ -7,6 +7,7 @@ $fuenteAgro=Get-ChildItem src/main -Recurse -File | Sort-Object LastWriteTime -D
 $recompilarAgro=$Compilar -or !(Test-Path $jarAgro)
 if (!$recompilarAgro) { $recompilarAgro=$fuenteAgro.LastWriteTime -gt (Get-Item $jarAgro).LastWriteTime }
 if ($recompilarAgro) {
+    if(Test-Path target) { Get-ChildItem target -Recurse -File | ForEach-Object { $_.IsReadOnly=$false } }
     $mavenLocal=Join-Path $PSScriptRoot '../../work/maven/apache-maven-3.9.16/bin/mvn.cmd'
     $repoLocal=Join-Path $PSScriptRoot '../../work/maven/repository'
     $ErrorActionPreference='Continue'
