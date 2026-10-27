@@ -1,0 +1,495 @@
+{
+  "fecha": "2026-10-27T14:41:40.112626-05:00",
+  "resultados": [
+    {
+      "prueba": "Login tecnico1",
+      "metodo": "POST",
+      "ruta": "/auth/login",
+      "esperado": 200,
+      "status": 200,
+      "correcto": true,
+      "respuesta": {
+        "id": 1,
+        "usuario": "tecnico1",
+        "nombre": "Técnico de campo",
+        "rol": "TECNICO",
+        "privilegios": [
+          "LABOR_CREAR",
+          "LABOR_EDITAR",
+          "LABOR_LEER",
+          "LOTE_LEER"
+        ],
+        "edicionGlobal": false,
+        "expiraEn": 3600
+      }
+    },
+    {
+      "prueba": "Login jefe1",
+      "metodo": "POST",
+      "ruta": "/auth/login",
+      "esperado": 200,
+      "status": 200,
+      "correcto": true,
+      "respuesta": {
+        "id": 2,
+        "usuario": "jefe1",
+        "nombre": "Jefe de campo",
+        "rol": "JEFE_CAMPO",
+        "privilegios": [
+          "CAMPANIA_CERRAR",
+          "LABOR_CREAR",
+          "LABOR_EDITAR",
+          "LABOR_ELIMINAR",
+          "LABOR_LEER",
+          "LOTE_LEER"
+        ],
+        "edicionGlobal": true,
+        "expiraEn": 3600
+      }
+    },
+    {
+      "prueba": "Login admin",
+      "metodo": "POST",
+      "ruta": "/auth/login",
+      "esperado": 200,
+      "status": 200,
+      "correcto": true,
+      "respuesta": {
+        "id": 3,
+        "usuario": "admin",
+        "nombre": "Administrador",
+        "rol": "ADMINISTRADOR",
+        "privilegios": [
+          "LABOR_LEER",
+          "LOTE_LEER",
+          "USUARIO_GESTIONAR"
+        ],
+        "edicionGlobal": false,
+        "expiraEn": 3600
+      }
+    },
+    {
+      "prueba": "401 sin token",
+      "metodo": "GET",
+      "ruta": "/lotes",
+      "esperado": 401,
+      "status": 401,
+      "correcto": true,
+      "respuesta": {
+        "timestamp": "2026-10-27T14:41:38.814339300",
+        "status": 401,
+        "error": "Unauthorized",
+        "message": "Inicia sesiÃ³n para continuar",
+        "path": "/api/v1/lotes",
+        "validationErrors": {}
+      }
+    },
+    {
+      "prueba": "401 token alterado",
+      "metodo": "GET",
+      "ruta": "/lotes",
+      "esperado": 401,
+      "status": 401,
+      "correcto": true,
+      "respuesta": {
+        "timestamp": "2026-10-27T14:41:39.320399600",
+        "status": 401,
+        "error": "Unauthorized",
+        "message": "SesiÃ³n vencida o token invÃ¡lido",
+        "path": "/api/v1/lotes",
+        "validationErrors": {}
+      }
+    },
+    {
+      "prueba": "Credenciales incorrectas",
+      "metodo": "POST",
+      "ruta": "/auth/login",
+      "esperado": 401,
+      "status": 401,
+      "correcto": true,
+      "respuesta": {
+        "timestamp": "2026-10-27T14:41:39.454942400",
+        "status": 401,
+        "error": "Unauthorized",
+        "message": "Usuario o contraseÃ±a incorrectos",
+        "path": "/api/v1/auth/login",
+        "validationErrors": {}
+      }
+    },
+    {
+      "prueba": "Paginación",
+      "metodo": "GET",
+      "ruta": "/lotes?pagina=0&tamanio=3",
+      "esperado": 200,
+      "status": 200,
+      "correcto": true,
+      "respuesta": {
+        "contenido": [
+          {
+            "id": 1,
+            "codigo": "AS-001",
+            "nombre": "La Esperanza",
+            "hectareas": 2.5,
+            "cultivo": "Papa",
+            "valle": "Mantaro",
+            "campaniaCerrada": false,
+            "dosisMaximaPorHectarea": 2.0
+          },
+          {
+            "id": 2,
+            "codigo": "AS-002",
+            "nombre": "Los Sauces",
+            "hectareas": 3.0,
+            "cultivo": "Maíz",
+            "valle": "Sagrado",
+            "campaniaCerrada": false,
+            "dosisMaximaPorHectarea": 2.0
+          },
+          {
+            "id": 3,
+            "codigo": "AS-003",
+            "nombre": "El Mirador",
+            "hectareas": 3.5,
+            "cultivo": "Quinua",
+            "valle": "Tambo",
+            "campaniaCerrada": false,
+            "dosisMaximaPorHectarea": 2.0
+          }
+        ],
+        "pagina": 0,
+        "tamanio": 3,
+        "totalElementos": 8,
+        "totalPaginas": 3,
+        "ultima": false
+      }
+    },
+    {
+      "prueba": "Filtros valle y estado",
+      "metodo": "GET",
+      "ruta": "/lotes?valle=Mantaro&campaniaCerrada=false",
+      "esperado": 200,
+      "status": 200,
+      "correcto": true,
+      "respuesta": {
+        "contenido": [
+          {
+            "id": 1,
+            "codigo": "AS-001",
+            "nombre": "La Esperanza",
+            "hectareas": 2.5,
+            "cultivo": "Papa",
+            "valle": "Mantaro",
+            "campaniaCerrada": false,
+            "dosisMaximaPorHectarea": 2.0
+          },
+          {
+            "id": 4,
+            "codigo": "AS-004",
+            "nombre": "Pampa Verde",
+            "hectareas": 4.0,
+            "cultivo": "Haba",
+            "valle": "Mantaro",
+            "campaniaCerrada": false,
+            "dosisMaximaPorHectarea": 2.0
+          }
+        ],
+        "pagina": 0,
+        "tamanio": 20,
+        "totalElementos": 2,
+        "totalPaginas": 1,
+        "ultima": true
+      }
+    },
+    {
+      "prueba": "Detalle lote",
+      "metodo": "GET",
+      "ruta": "/lotes/1",
+      "esperado": 200,
+      "status": 200,
+      "correcto": true,
+      "respuesta": {
+        "id": 1,
+        "codigo": "AS-001",
+        "nombre": "La Esperanza",
+        "hectareas": 2.5,
+        "cultivo": "Papa",
+        "valle": "Mantaro",
+        "campaniaCerrada": false,
+        "dosisMaximaPorHectarea": 2.0
+      }
+    },
+    {
+      "prueba": "Labores paginadas",
+      "metodo": "GET",
+      "ruta": "/lotes/1/labores?pagina=0&tamanio=2",
+      "esperado": 200,
+      "status": 200,
+      "correcto": true,
+      "respuesta": {
+        "contenido": [
+          {
+            "id": 1,
+            "loteId": 1,
+            "tipo": "RIEGO",
+            "fecha": "2026-10-27",
+            "responsable": "Técnico de campo",
+            "cantidad": 1.0,
+            "observacion": "Registro inicial de campaña",
+            "responsableId": 1,
+            "creadoEn": "2026-10-27T13:39:13.533318"
+          },
+          {
+            "id": 9,
+            "loteId": 1,
+            "tipo": "COSECHA",
+            "fecha": "2026-10-26",
+            "responsable": "Técnico de campo",
+            "cantidad": 1.0,
+            "observacion": "Registro inicial de campaña",
+            "responsableId": 1,
+            "creadoEn": "2026-10-25T14:39:13.538938"
+          }
+        ],
+        "pagina": 0,
+        "tamanio": 2,
+        "totalElementos": 3,
+        "totalPaginas": 2,
+        "ultima": false
+      }
+    },
+    {
+      "prueba": "403 administrador no crea",
+      "metodo": "POST",
+      "ruta": "/labores",
+      "esperado": 403,
+      "status": 403,
+      "correcto": true,
+      "respuesta": {
+        "timestamp": "2026-10-27T14:41:39.735937400",
+        "status": 403,
+        "error": "Forbidden",
+        "message": "No tienes el privilegio necesario para esta operaciÃ³n",
+        "path": "/api/v1/labores",
+        "validationErrors": {}
+      }
+    },
+    {
+      "prueba": "Sesión se mantiene tras 403",
+      "metodo": "GET",
+      "ruta": "/usuarios/me",
+      "esperado": 200,
+      "status": 200,
+      "correcto": true,
+      "respuesta": {
+        "id": 3,
+        "usuario": "admin",
+        "nombre": "Administrador",
+        "rol": "ADMINISTRADOR",
+        "privilegios": [
+          "LABOR_LEER",
+          "LOTE_LEER",
+          "USUARIO_GESTIONAR"
+        ],
+        "edicionGlobal": false
+      }
+    },
+    {
+      "prueba": "403 técnico no elimina",
+      "metodo": "DELETE",
+      "ruta": "/labores/1",
+      "esperado": 403,
+      "status": 403,
+      "correcto": true,
+      "respuesta": {
+        "timestamp": "2026-10-27T14:41:39.776947100",
+        "status": 403,
+        "error": "Forbidden",
+        "message": "No tienes el privilegio necesario para esta operaciÃ³n",
+        "path": "/api/v1/labores/1",
+        "validationErrors": {}
+      }
+    },
+    {
+      "prueba": "403 técnico no cierra",
+      "metodo": "POST",
+      "ruta": "/lotes/2/cerrar-campania",
+      "esperado": 403,
+      "status": 403,
+      "correcto": true,
+      "respuesta": {
+        "timestamp": "2026-10-27T14:41:39.784935800",
+        "status": 403,
+        "error": "Forbidden",
+        "message": "No tienes el privilegio necesario para esta operaciÃ³n",
+        "path": "/api/v1/lotes/2/cerrar-campania",
+        "validationErrors": {}
+      }
+    },
+    {
+      "prueba": "RN01 lote cerrado",
+      "metodo": "POST",
+      "ruta": "/labores",
+      "esperado": 409,
+      "status": 409,
+      "correcto": true,
+      "respuesta": {
+        "timestamp": "2026-10-27T14:41:39.848943900",
+        "status": 409,
+        "error": "Conflict",
+        "message": "La campaña de este lote está cerrada",
+        "path": "/api/v1/labores",
+        "validationErrors": {}
+      }
+    },
+    {
+      "prueba": "RN03 sin cosecha",
+      "metodo": "POST",
+      "ruta": "/lotes/2/cerrar-campania",
+      "esperado": 409,
+      "status": 409,
+      "correcto": true,
+      "respuesta": {
+        "timestamp": "2026-10-27T14:41:39.887942300",
+        "status": 409,
+        "error": "Conflict",
+        "message": "Registra al menos una cosecha antes de cerrar la campaña",
+        "path": "/api/v1/lotes/2/cerrar-campania",
+        "validationErrors": {}
+      }
+    },
+    {
+      "prueba": "RN04 dosis máxima",
+      "metodo": "POST",
+      "ruta": "/labores",
+      "esperado": 400,
+      "status": 400,
+      "correcto": true,
+      "respuesta": {
+        "timestamp": "2026-10-27T14:41:39.905943100",
+        "status": 400,
+        "error": "Bad Request",
+        "message": "La dosis supera el máximo del lote",
+        "path": "/api/v1/labores",
+        "validationErrors": {
+          "cantidad": "Máximo permitido: 6.0"
+        }
+      }
+    },
+    {
+      "prueba": "Validación campo",
+      "metodo": "POST",
+      "ruta": "/labores",
+      "esperado": 400,
+      "status": 400,
+      "correcto": true,
+      "respuesta": {
+        "timestamp": "2026-10-27T14:41:39.941938500",
+        "status": 400,
+        "error": "Bad Request",
+        "message": "Datos inválidos",
+        "path": "/api/v1/labores",
+        "validationErrors": {
+          "cantidad": "La cantidad debe ser mayor que cero"
+        }
+      }
+    },
+    {
+      "prueba": "404 lote",
+      "metodo": "GET",
+      "ruta": "/lotes/999999",
+      "esperado": 404,
+      "status": 404,
+      "correcto": true,
+      "respuesta": {
+        "timestamp": "2026-10-27T14:41:39.955939500",
+        "status": 404,
+        "error": "Not Found",
+        "message": "El lote no existe",
+        "path": "/api/v1/lotes/999999",
+        "validationErrors": {}
+      }
+    },
+    {
+      "prueba": "Crear labor",
+      "metodo": "POST",
+      "ruta": "/labores",
+      "esperado": 201,
+      "status": 201,
+      "correcto": true,
+      "respuesta": {
+        "id": 21,
+        "loteId": 2,
+        "tipo": "RIEGO",
+        "fecha": "2026-10-27",
+        "responsable": "Técnico de campo",
+        "cantidad": 1.0,
+        "observacion": "Prueba automatizada 1284548a",
+        "responsableId": 1,
+        "creadoEn": "2026-10-27T14:41:40.004058"
+      }
+    },
+    {
+      "prueba": "Reintento idempotente",
+      "metodo": "POST",
+      "ruta": "/labores",
+      "esperado": 201,
+      "status": 201,
+      "correcto": true,
+      "respuesta": {
+        "id": 21,
+        "loteId": 2,
+        "tipo": "RIEGO",
+        "fecha": "2026-10-27",
+        "responsable": "Técnico de campo",
+        "cantidad": 1.0,
+        "observacion": "Prueba automatizada 1284548a",
+        "responsableId": 1,
+        "creadoEn": "2026-10-27T14:41:40.004058"
+      }
+    },
+    {
+      "prueba": "Actualizar labor",
+      "metodo": "PUT",
+      "ruta": "/labores/21",
+      "esperado": 200,
+      "status": 200,
+      "correcto": true,
+      "respuesta": {
+        "id": 21,
+        "loteId": 2,
+        "tipo": "RIEGO",
+        "fecha": "2026-10-27",
+        "responsable": "Técnico de campo",
+        "cantidad": 2.0,
+        "observacion": "Prueba automatizada 1284548a",
+        "responsableId": 1,
+        "creadoEn": "2026-10-27T14:41:40.004058"
+      }
+    },
+    {
+      "prueba": "Eliminar sin cuerpo",
+      "metodo": "DELETE",
+      "ruta": "/labores/21",
+      "esperado": 204,
+      "status": 204,
+      "correcto": true,
+      "respuesta": null
+    },
+    {
+      "prueba": "404 después de eliminar",
+      "metodo": "PUT",
+      "ruta": "/labores/21",
+      "esperado": 404,
+      "status": 404,
+      "correcto": true,
+      "respuesta": {
+        "timestamp": "2026-10-27T14:41:40.110624700",
+        "status": 404,
+        "error": "Not Found",
+        "message": "La labor no existe",
+        "path": "/api/v1/labores/21",
+        "validationErrors": {}
+      }
+    }
+  ]
+}
