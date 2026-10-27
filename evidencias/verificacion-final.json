@@ -1,0 +1,28 @@
+{
+  "fecha": "2026-10-27T15:29:29.113171-05:00",
+  "backend": {
+    "repositorio": "https://github.com/GreysiLL/ExamenS2",
+    "pruebas": 9,
+    "fallos": 0,
+    "sha256Jar": "f978ff3531ab2c8cf09e550711f899c6291719e53123933e8ae75b7751dfb767"
+  },
+  "android": {
+    "repositorio": "https://github.com/GreysiLL/exa-agrocampo",
+    "pruebasCommonTest": 13,
+    "fallos": 0,
+    "sha256Apk": "2f98c8feb3b33ccc7eef718ec66752983215039a54b90e8a70dbe98b90045612",
+    "dispositivo": "Pixel 9 (2), Android 16, API 36"
+  },
+  "postman": {
+    "solicitudesEjecutadas": 27,
+    "comprobaciones": 30,
+    "fallos": 0,
+    "cierreOpcionalOmitido": true
+  },
+  "red": "Registro en modo avión, reapertura en frío, reconexión automática y confirmación HTTP",
+  "idLocal": -1,
+  "idServidor": 23,
+  "evidencias": "Capturas Android y respuesta 403 real archivada y abierta en IntelliJ; los relojes del emulador y del equipo usan zonas horarias distintas. Bitácora en America/Lima.",
+  "baseServidorDePruebas": "H2 en archivo aislado; misma aplicación compilada y mismas semillas que el backend entregado. No se empleó un servicio simulado.",
+  "trazabilidad": "Inicio real del proyecto el 27 de octubre de 2026, sin alterar fechas ni atribuir historial de prácticas anteriores."
+}

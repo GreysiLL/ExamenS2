@@ -69,4 +69,4 @@ Aplicación: https://github.com/GreysiLL/exa-agrocampo
 
 ## Trazabilidad
 
-Se usan main, develop, ramas feature, fix y sc-b-duran/sc-c-duran. Los commits tienen las fechas reales de esta jornada. Este proyecto se inició desde cero el día del examen: no acredita un historial distribuido a lo largo de la unidad y no se presenta como si lo tuviera. Las fusiones locales no equivalen a solicitudes de incorporación remotas; comprobar estas últimas en GitHub. La Parte III no se desarrolla, por indicación del estudiante.
+Se usan main, develop, ramas feature, fix y sc-b-duran/sc-c-duran. Los commits tienen las fechas reales de esta jornada. Este proyecto se inició desde cero el día del examen: no acredita un historial distribuido a lo largo de la unidad y no se presenta como si lo tuviera. Las fusiones locales no equivalen a solicitudes de incorporación remotas; comprobar estas últimas en GitHub.
